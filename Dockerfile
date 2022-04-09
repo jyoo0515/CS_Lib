@@ -8,11 +8,9 @@ RUN yarn build
 WORKDIR /app
 COPY package*.json ./
 RUN yarn install
-
 COPY ./ ./
 
 ENV NODE_ENV=production
 
-WORKDIR /app
-EXPOSE 3000
+EXPOSE 5000
 CMD [ "yarn", "start:prod" ]
