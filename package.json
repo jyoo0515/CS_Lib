@@ -29,8 +29,9 @@
       "prettier": "^2.6.2"
    },
    "scripts": {
-      "start": "node dist/app.js",
+      "start": "node build/app.js",
       "build": "tsc -p .",
+      "start:prod": "yarn build && yarn start",
       "backend": "nodemon --watch \"**/*.ts\" --exec \"ts-node\" src/app.ts",
       "frontend": "yarn --cwd client start",
       "dev": "concurrently \"yarn backend\" \"yarn --cwd client start\"",

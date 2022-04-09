@@ -12,5 +12,9 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "esModuleInterop": true
-  }
+  },
+  "exclude": [
+    "node_modlues",
+    "client"
+  ]
 }
