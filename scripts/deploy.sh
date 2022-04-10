@@ -5,4 +5,5 @@ cd $REPOSITORY
 
 echo "> Start"
 docker kill $(docker ps -q)
+docker-compose build
 docker-compose up -d
