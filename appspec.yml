@@ -4,7 +4,6 @@ os: linux
 files:
   - source: /
     destination: /home/ubuntu/cslib
-    overwrite: true
 
 permission:
   - object: /home/ubuntu/cslib
@@ -12,7 +11,10 @@ permission:
     group: ubuntu
 
 hooks:
+  BeforeInstall:
+    - location: scripts/before_deploy.sh
+      runas: ubuntu
+
   AfterInstall:
-    - location: scripts/deploy.sh
-      timeout: 300
+    - location: scripts/after_deploy.sh
       runas: ubuntu
