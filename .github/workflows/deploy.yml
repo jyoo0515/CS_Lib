@@ -46,4 +46,4 @@ jobs:
           --application-name cslib
           --deployment-config-name CodeDeployDefault.AllAtOnce
           --deployment-group-name cslib-group
-          --s3-location bucket=cslib-bucket,key=app//$GITHUB_SHA.zip,bundleType=zip
+          --s3-location bucket=cslib-bucket,key=app/$GITHUB_SHA.zip,bundleType=zip
