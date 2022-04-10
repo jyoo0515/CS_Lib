@@ -7,4 +7,4 @@ COPY ./ ./
 ENV NODE_ENV=production
 
 EXPOSE 5000
-CMD [ "yarn", "start:prod" ]
+CMD [ "yarn", "start" ]
