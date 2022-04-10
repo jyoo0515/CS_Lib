@@ -1,11 +1,13 @@
-FROM node:alpine
+FROM node:alpine AS builder
 WORKDIR /app/client
 COPY client/package*.json ./
 RUN yarn install
 COPY client/ ./
 RUN yarn build
 
+FROM node:alpine
 WORKDIR /app
+COPY --from=builder /app/client/build /app/client/build
 COPY package*.json ./
 RUN yarn install
 COPY ./ ./
