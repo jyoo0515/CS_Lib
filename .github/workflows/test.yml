@@ -18,6 +18,9 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-20.04
 
+    env:
+      token: 5b125370-59a2-4ed7-b626-4b1b8ad4eb47
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -29,3 +32,7 @@ jobs:
       
       - name: Run tests
         run: yarn test
+      
+      - name: Codcov
+        run: ./node_modules/.bin/codecov --token=$token
+    
