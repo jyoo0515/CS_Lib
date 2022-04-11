@@ -37,7 +37,7 @@ jobs:
         run: sqlite3 test.db
       
       - name: Run tests
-        run: yarn test
+        run: DB_NAME=test.db DB_SYNC=true yarn test
       
       - name: Codcov
         run: ./node_modules/.bin/codecov --token=$token
