@@ -42,6 +42,7 @@
       "dev": "concurrently \"yarn backend\" \"yarn --cwd client start\"",
       "typeorm": "typeorm-ts-node-commonjs",
       "lint": "eslint .",
-      "test": "jest --setupFiles dotenv/config --forceExit --detectOpenHandles --coverage"
+      "test": "NODE_ENV=test jest --setupFiles dotenv/config --forceExit --detectOpenHandles --coverage",
+      "test:win": "SET NODE_ENV=test& jest --setupFiles dotenv/config --forceExit --detectOpenHandles --coverage"
    }
 }
