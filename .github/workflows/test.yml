@@ -29,6 +29,12 @@ jobs:
       
       - name: Install dependencies
         run: yarn install
+
+      - name: Install SQLite
+        run: sudo apt-get install sqlite3
+      
+      - name: Create testing database
+        run: sqlite3 test.db
       
       - name: Run tests
         run: yarn test
