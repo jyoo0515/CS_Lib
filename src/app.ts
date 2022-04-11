@@ -3,7 +3,7 @@ import AppDataSource from './data-source';
 import path from 'path';
 import dotenv from 'dotenv';
 
-import userRoutes from './routes/users';
+import userRoutes from './routes/user.route';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
