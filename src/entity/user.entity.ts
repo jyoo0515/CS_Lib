@@ -18,8 +18,18 @@ class User extends BaseEntity {
   @Column()
   lastName: string;
 
-  private hashPassword(password: string): Promise<string> {
-    return bcrypt.hash(password, 10);
+  static async checkUnique(username: string): Promise<boolean> {
+    try {
+      await User.findOneByOrFail({ username: username });
+      return false;
+    } catch (err) {
+      return true;
+    }
+  }
+
+  private async hashPassword(password: string): Promise<string> {
+    const salt = await bcrypt.genSalt(10);
+    return bcrypt.hash(password, salt);
   }
 
   @BeforeInsert()
@@ -29,6 +39,10 @@ class User extends BaseEntity {
       const hashedPassword = await this.hashPassword(this.password);
       this.password = hashedPassword;
     }
+  }
+
+  validatePassword(password: string): Promise<boolean> {
+    return bcrypt.compare(password, this.password);
   }
 }
 

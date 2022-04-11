@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import AppDataSource from './data-source';
 import path from 'path';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 
 import userRoutes from './routes/user.route';
 
@@ -11,6 +12,7 @@ dotenv.config();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello');
