@@ -27,8 +27,8 @@ afterAll(async () => {
 interface userCreateDTO {
   username: string;
   password: string;
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
 }
 
 interface userLoginDTO {
@@ -49,8 +49,8 @@ describe('[POST] /api/users/register', () => {
     const userData: userCreateDTO = {
       username: 'test',
       password: 'test',
-      firstname: 'John',
-      lastname: 'Doe',
+      firstName: 'John',
+      lastName: 'Doe',
     };
     const res = await request(app).post('/api/users/register').send(userData);
     expect(res.status).toBe(200);
@@ -99,17 +99,47 @@ describe('Endpoints after login', () => {
 
   describe('[GET] /api/users/logout', () => {
     test('should delete jwt when logged in', async () => {
-      const res = await agent.get('/api/users/logout').withCredentials();
+      const res = await agent.get('/api/users/logout');
       expect(res.body).toEqual({ logoutSuccess: true, message: 'Logged out' });
     });
   });
 
   describe('[GET] /api/users', () => {
-    test('return list of users', async () => {
+    test('should return list of users', async () => {
       const res = await agent.get('/api/users');
       expect(res.status).toBe(200);
       expect(Array.isArray(res.body)).toBe(true);
       expect(res.body).toHaveLength(1);
+    });
+  });
+
+  describe('[PUT] /api/users', () => {
+    test('should return message with cod 200', async () => {
+      const payload = {
+        firstName: 'Jane',
+        lastName: 'Doe',
+      };
+      const res = await agent.put('/api/users').send(payload);
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual({ message: 'Successfully updated' });
+    });
+  });
+
+  describe('[GET] /api/users', () => {
+    test('should return list of users', async () => {
+      const res = await agent.get('/api/users');
+      expect(res.status).toBe(200);
+      expect(Array.isArray(res.body)).toBe(true);
+      expect(res.body).toHaveLength(1);
+      expect(res.body[0]).toHaveProperty('firstName', 'Jane');
+    });
+  });
+
+  describe('[DELETE] /api/users', () => {
+    test('should delete currently logged in user', async () => {
+      const res = await agent.delete('/api/users');
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual({ message: 'Successfully deleted' });
     });
   });
 });
