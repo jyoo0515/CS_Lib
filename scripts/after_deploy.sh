@@ -6,6 +6,7 @@ sudo mv -f prod.db $REPOSITORY
 cd config
 sudo cp .env $REPOSITORY
 cd $REPOSITORY
+yarn install
 
 docker kill $(docker ps -q)
 docker-compose up --build -d
