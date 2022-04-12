@@ -28,15 +28,15 @@ jobs:
         working-directory: ./client
         run: |
           yarn install
-          yarn build
+          CI='' yarn build
 
       - name: Build server
         run: |
           yarn install
-          yarn build
+          CI='' yarn build
 
       - name: Zip files
-        run: zip -r ./$GITHUB_SHA.zip build client/build appspec.yml nginx scripts docker-compose.yml Dockerfile dev.db package.json package-lock.json
+        run: zip -r ./$GITHUB_SHA.zip build client/build appspec.yml nginx scripts docker-compose.yml Dockerfile package.json package-lock.json
         shell: bash
       
       - name: Configure AWS credentials
