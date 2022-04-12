@@ -19,14 +19,14 @@ export const checkUnique = async (req: Request, res: Response) => {
 };
 
 export const register = async (req: Request, res: Response) => {
-  const { username, password, firstname, lastname } = req.body;
+  const { username, password, firstName, lastName } = req.body;
   if (User.checkUnique(username)) {
     try {
       const user = new User();
       user.username = username;
       user.password = password;
-      user.firstName = firstname;
-      user.lastName = lastname;
+      user.firstName = firstName;
+      user.lastName = lastName;
 
       const savedUser = await User.save(user);
       return res.json({ id: savedUser.id, username: savedUser.username });
