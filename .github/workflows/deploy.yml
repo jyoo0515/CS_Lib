@@ -36,7 +36,7 @@ jobs:
           CI='' yarn build
 
       - name: Zip files
-        run: zip -r ./$GITHUB_SHA.zip build client/build appspec.yml nginx scripts docker-compose.yml Dockerfile package.json package-lock.json
+        run: zip -r ./$GITHUB_SHA.zip build client/build appspec.yml nginx scripts docker-compose.yml Dockerfile package.json package-lock.json yarn.lock
         shell: bash
       
       - name: Configure AWS credentials
