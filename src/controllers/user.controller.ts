@@ -83,11 +83,11 @@ export const deleteUser = async (req: Request, res: Response) => {
 
 export const updateUser = async (req: Request, res: Response) => {
   const username = req.user.username;
-  const { firstname, lastname } = req.body;
+  const { firstName, lastName } = req.body;
   try {
     const user = await User.findOneBy({ username });
-    user.firstName = firstname;
-    user.lastName = lastname;
+    user.firstName = firstName;
+    user.lastName = lastName;
     await User.upsert(user, ['username']);
     return res.json({ message: 'Successfully updated' });
   } catch (err) {
