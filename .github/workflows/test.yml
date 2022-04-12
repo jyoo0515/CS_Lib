@@ -35,7 +35,8 @@ jobs:
           echo "DB_NAME=test.db" >> .env
           echo "DB_SYNC=true" >> .env
           echo "ACCESS_TOKEN_SECRET=$ACCESSTOKEN_SECRET" >> .env
-        env: ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+        env: 
+          ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
       
       - name: Run tests
         run: yarn test
