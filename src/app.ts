@@ -1,16 +1,24 @@
 import express, { Request, Response } from 'express';
-import DataSource from './data-source';
+import AppDataSource from './data-source';
 import path from 'path';
+import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
+
+import userRoutes from './routes/user.route';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+dotenv.config();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello');
 });
+
+app.use('/api/users', userRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
@@ -20,14 +28,15 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-const dbContext = process.env.NODE_ENV === 'production' ? DataSource.prod : DataSource.dev;
-dbContext
-  .initialize()
-  .then(async () => {
-    app.listen(PORT, () => {
-      console.log(`Server listening on ${PORT}`);
-    });
-  })
-  .catch((error) => console.log(error));
+if (process.env.NODE_ENV !== 'test') {
+  AppDataSource.initialize()
+    .then(() => {
+      console.log('Database initialized');
+      app.listen(PORT, () => {
+        console.log(`Server listening on ${PORT}`);
+      });
+    })
+    .catch((error) => console.log(error));
+}
 
 export default app;

@@ -30,6 +30,14 @@ jobs:
       - name: Install dependencies
         run: yarn install
       
+      - name: Create .env file
+        run : |
+          echo "DB_NAME=test.db" >> .env
+          echo "DB_SYNC=true" >> .env
+          echo "ACCESS_TOKEN_SECRET=$ACCESS_TOKEN_SECRET" >> .env
+        env: 
+          ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+      
       - name: Run tests
         run: yarn test
       

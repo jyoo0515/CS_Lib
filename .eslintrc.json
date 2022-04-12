@@ -13,7 +13,7 @@
     "node": true,
     "jest": true
   },
-  "ignorePatterns": ["node_modules/", "dist/", "client/node_modules/", "client/build/"],
+  "ignorePatterns": ["node_modules/", "build/", "client/node_modules/", "client/build/", "tests/"],
   "rules": {
     "@typescript-eslint/interface-name-prefix": "Off",
     "@typescript-eslint/explicit-function-return-type": "Off",
