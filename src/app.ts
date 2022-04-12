@@ -28,15 +28,15 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-AppDataSource.initialize()
-  .then(() => {
-    console.log('Database initialized');
-    if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV !== 'test') {
+  AppDataSource.initialize()
+    .then(() => {
+      console.log('Database initialized');
       app.listen(PORT, () => {
         console.log(`Server listening on ${PORT}`);
       });
-    }
-  })
-  .catch((error) => console.log(error));
+    })
+    .catch((error) => console.log(error));
+}
 
 export default app;
