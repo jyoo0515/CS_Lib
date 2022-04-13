@@ -44,6 +44,16 @@ class User extends BaseEntity {
   validatePassword(password: string): Promise<boolean> {
     return bcrypt.compare(password, this.password);
   }
+
+  destruct() {
+    const userDTO = {
+      id: this.id,
+      username: this.username,
+      firstName: this.firstName,
+      lastName: this.lastName,
+    };
+    return userDTO;
+  }
 }
 
 export default User;
