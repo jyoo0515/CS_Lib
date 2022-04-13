@@ -5,7 +5,20 @@ import * as auth from '../middleware/auth';
 export const getAll = async (req: Request, res: Response) => {
   try {
     const users = await User.find();
-    return res.json(users);
+    const userDTOs = [];
+    users.map((user) => userDTOs.push(user.destruct()));
+    return res.json(userDTOs);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: 'Something went wrong' });
+  }
+};
+
+export const me = async (req: Request, res: Response) => {
+  const username = req.user.username;
+  try {
+    const user = await User.findOneBy({ username });
+    return res.json(user.destruct());
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: 'Something went wrong' });
@@ -29,7 +42,7 @@ export const register = async (req: Request, res: Response) => {
       user.lastName = lastName;
 
       const savedUser = await User.save(user);
-      return res.json({ id: savedUser.id, username: savedUser.username });
+      return res.status(201).json(savedUser.destruct());
     } catch (err) {
       console.log(err);
       return res.status(500).json({ message: 'Seomthing went wrong' });
