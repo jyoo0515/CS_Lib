@@ -18,7 +18,7 @@ export const me = async (req: Request, res: Response) => {
   const username = req.user.username;
   try {
     const user = await User.findOneBy({ username });
-    return res.json(user.destruct);
+    return res.json(user.destruct());
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: 'Something went wrong' });

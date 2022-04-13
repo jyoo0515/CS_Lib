@@ -3,6 +3,18 @@ import request from 'supertest';
 import app from '../src/app';
 import User from '../src/entity/user.entity';
 
+interface userCreateDTO {
+  username: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+}
+
+interface userLoginDTO {
+  username: string;
+  password: string;
+}
+
 beforeAll(async () => {
   const TestDataSource = new DataSource({
     type: 'sqlite',
@@ -24,18 +36,6 @@ afterAll(async () => {
   await new Promise<void>((resolve) => setTimeout(() => resolve(), 500));
 });
 
-interface userCreateDTO {
-  username: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-}
-
-interface userLoginDTO {
-  username: string;
-  password: string;
-}
-
 describe('[GET] /api/users/unique/:username', () => {
   test('should return boolean', async () => {
     const res = await request(app).get('/api/users/unique/test');
@@ -53,8 +53,8 @@ describe('[POST] /api/users/register', () => {
       lastName: 'Doe',
     };
     const res = await request(app).post('/api/users/register').send(userData);
-    expect(res.status).toBe(200);
-    expect(res.body).toEqual({ id: 1, username: 'test' });
+    expect(res.status).toBe(201);
+    expect(res.body).toEqual({ id: 1, username: 'test', firstName: 'John', lastName: 'Doe' });
   });
 });
 
@@ -94,6 +94,13 @@ describe('Endpoints after login', () => {
     return new Promise<void>(async (resolve) => {
       await agent.post('/api/users/login').send(userData);
       resolve();
+    });
+  });
+
+  describe('[GET] /api/users/me', () => {
+    test('should return logged in user info', async () => {
+      const res = await agent.get('/api/users/me');
+      expect(res.body).toEqual({ id: 1, username: 'test', firstName: 'John', lastName: 'Doe' });
     });
   });
 
