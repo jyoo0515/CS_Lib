@@ -13,7 +13,6 @@ function AuthHOC(SpecificComponent: any, option: boolean | null, adminRoute: boo
         .get('/users/me')
         .then((res) => {
           if (option === false) {
-            console.log('inside');
             navigate('/');
           }
         })
@@ -23,7 +22,6 @@ function AuthHOC(SpecificComponent: any, option: boolean | null, adminRoute: boo
           }
         });
     }, []);
-    console.log('outside');
     return <SpecificComponent navigate={navigate} />;
   };
   return <AuthenticationCheck />;
