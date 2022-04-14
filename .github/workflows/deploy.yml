@@ -30,7 +30,7 @@ jobs:
           yarn install
           CI='' REACT_APP_API_URL=$url yarn build
         env:
-          url: ${{ secretes.API_URL }}
+          url: ${{ secrets.API_URL }}
 
       - name: Build server
         run: |
