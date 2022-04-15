@@ -3,6 +3,7 @@ import AppDataSource from './data-source';
 import path from 'path';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
+import cors, { CorsOptions } from 'cors';
 
 import userRoutes from './routes/user.route';
 
@@ -10,9 +11,15 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 dotenv.config();
 
+const corsOption: CorsOptions = {
+  origin: 'http://localhost',
+  credentials: true,
+};
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors(corsOption));
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello');
