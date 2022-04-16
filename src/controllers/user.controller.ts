@@ -42,7 +42,7 @@ export const register = async (req: Request, res: Response) => {
       user.lastName = lastName;
 
       const savedUser = await User.save(user);
-      return res.status(201).json(savedUser.destruct());
+      return res.status(201).json({ id: savedUser.id, username: savedUser.username });
     } catch (err) {
       console.log(err);
       return res.status(500).json({ message: 'Seomthing went wrong' });
