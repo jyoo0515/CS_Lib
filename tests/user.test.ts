@@ -54,7 +54,7 @@ describe('[POST] /api/users/register', () => {
     };
     const res = await request(app).post('/api/users/register').send(userData);
     expect(res.status).toBe(201);
-    expect(res.body).toEqual({ id: 1, username: 'test', firstName: 'John', lastName: 'Doe' });
+    expect(res.body).toEqual({ id: 1, username: 'test' });
   });
 });
 
