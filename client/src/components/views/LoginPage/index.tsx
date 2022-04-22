@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import apiClient from 'api/axios';
+import { useNavigate } from 'react-router-dom';
+import useAuthAction from 'recoil/auth/useAuthAction';
 
 interface loginData {
   username: string;
@@ -9,6 +11,8 @@ interface loginData {
 
 function LoginPage() {
   const [form, setForm] = useState<loginData>({ username: '', password: '' });
+  const navigate = useNavigate();
+  const authAction = useAuthAction();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -19,8 +23,10 @@ function LoginPage() {
   };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    apiClient.post('/users/login', form).then((res) => alert(res.data.message));
-    setForm({ username: '', password: '' });
+    apiClient.post('/users/login', form).then((res) => {
+      authAction.authorize();
+      navigate('/');
+    });
   };
 
   return (

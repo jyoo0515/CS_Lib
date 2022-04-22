@@ -1,13 +1,27 @@
+import apiClient from 'api/axios';
 import React from 'react';
-import { Navbar, Container, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
+import { Navbar, Container, Nav, Form, FormControl, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import useAuth from 'recoil/auth/useAuth';
+import useAuthAction from 'recoil/auth/useAuthAction';
 
 function Navigation() {
+  const authState = useAuth();
+  const authAction = useAuthAction();
+  const handleLogout = () => {
+    apiClient
+      .get('/users/logout')
+      .then((res) => {
+        authAction.logout();
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <Navbar bg="light" expand="lg">
       <Container fluid>
         <Navbar.Brand as={Link} to="/">
-          Navbar scroll
+          Navbar
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
@@ -27,7 +41,15 @@ function Navigation() {
             <Nav.Link as={Link} to="/login">
               Login
             </Nav.Link>
+            <Nav.Link as={Link} to="/private">
+              Private
+            </Nav.Link>
           </Nav>
+          {authState.authenticated && (
+            <Button style={{ marginRight: '15px' }} variant="outline-danger" size="sm" onClick={handleLogout}>
+              Logout
+            </Button>
+          )}
           <Form className="d-flex">
             <FormControl type="search" placeholder="Search" className="me-2" aria-label="Search" />
             <Button variant="outline-success">Search</Button>
